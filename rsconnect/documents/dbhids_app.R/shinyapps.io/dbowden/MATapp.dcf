@@ -1,0 +1,13 @@
+name: MATapp
+title: MATapp
+username:
+account: dbowden
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1917536
+bundleId: 3386917
+url: https://dbowden.shinyapps.io/MATapp/
+when: 1594660449.02216
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|old
