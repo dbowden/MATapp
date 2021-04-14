@@ -1,8 +1,9 @@
-# merge into a single dataframe with indicators for the original types
+library(tidyverse)
+library(tidygeocoder)
 
-# load data
-programs <- read.csv("dbhids_geocoded.csv")
-programs <- subset(programs, select=-c(X))
+samhsa_programs <- read_csv("Tables_for_2020Q3_MATchMapper - samhsa_sa_bupe_site_listings.csv")
 
-providers <- read.csv("BupePrescribersData_ToPrint - allnames_June2020.csv")
+# geocode addresses
+samhsa_programs <- samhsa_programs %>% geocode(street = street1, city = city, state = state_usa, postalcode = zip5, method = 'census')
 
+write_csv(samhsa_programs, "samhsa_programs_geocoded.csv")
