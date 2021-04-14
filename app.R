@@ -17,21 +17,21 @@ ui <- shinyUI(fluidPage(
   sidebarLayout(
     sidebarPanel(width = 3,
                  tags$b("Data Sources"),
-                 checkboxInput("Phila.TAD", "Philadelphia DBHIDS", value=F),
-                 checkboxInput("FQHC", "HRSA + HFP: Federally Qualified Health Centers", value=F),
+                 checkboxInput("Phila.TAD", "Philadelphia DBHIDS", value=T),
+                 checkboxInput("FQHC", "HRSA + HFP: Federally Qualified Health Centers", value=T),
                  tags$small("SAMHSA:"),
-                 checkboxInput("FT.Loc", "Find Treatment Locator", value=F),
-                 checkboxInput("OTP.Dir", "Opioid Treatment Programs", value=F),
-                 checkboxInput("Other.Src", "OTHER", value=F),
+                 checkboxInput("FT.Loc", "Find Treatment Locator", value=T),
+                 checkboxInput("OTP.Dir", "Opioid Treatment Programs", value=T),
+                 checkboxInput("Other.Src", "OTHER", value=T),
                  tags$b("Medications Prescribed"),
-                 checkboxInput("bup", "Buprenorphine", value=F),
-                 checkboxInput("meth", "Methadone", value=F),
-                 checkboxInput("nal", "Naltrexone", value=F),
+                 checkboxInput("bup", "Buprenorphine", value=T),
+                 checkboxInput("meth", "Methadone", value=T),
+                 checkboxInput("nal", "Naltrexone", value=T),
                  tags$b("Also Available"),
-                 checkboxInput("primary", "Primary Care", value=F),
-                 checkboxInput("tele", "Telehelth", value=F),
-                 checkboxInput("pay", "Payment Assistance", value=F),
-                 checkboxInput("medicaid", "Accepts Medicaid", value=F),
+                 checkboxInput("primary", "Primary Care", value=T),
+                 checkboxInput("tele", "Telehelth", value=T),
+                 checkboxInput("pay", "Payment Assistance", value=T),
+                 checkboxInput("medicaid", "Accepts Medicaid", value=T),
                  tags$b("Map Options"),
                  checkboxInput("cluster", "Group Overlapping Points", value=F),
                  checkboxInput("unclear", "Omit Unclear Results", value=F)
@@ -67,22 +67,22 @@ server <- function(input, output) {
   # create filtered data
   map_data_react <- reactive({
     
-    if (input$unclear == TRUE){
+    if (input$unclear == FALSE){
       
       programs %>%
         filter(
-          conditional(input$Phila.TAD == TRUE, Phila.TAD == TRUE),
-          conditional(input$FQHC == TRUE, FQHC == TRUE),
-          conditional(input$FT.Loc == TRUE, FT.Loc == TRUE),
-          conditional(input$OTP.Dir == TRUE, OTP.Dir == TRUE),
-          conditional(input$Other.Src == TRUE, Other.Src == TRUE),
-          conditional(input$bup == TRUE, Buprenorphine == "Yes"),
-          conditional(input$meth == TRUE, Methadone == "Yes"),
-          conditional(input$nal == TRUE, Naltrexone == "Yes"),
-          conditional(input$primary == TRUE, Primary.Care == "Yes"),
-          conditional(input$tele == TRUE, Telehealth == "Yes"),
-          conditional(input$pay == TRUE, Payment.Assistance == "Yes"),
-          conditional(input$medicaid == TRUE, Medicaid == "Yes"),
+          conditional(input$Phila.TAD == F, Phila.TAD != TRUE),
+          conditional(input$FQHC == F, FQHC != TRUE),
+          conditional(input$FT.Loc == F, FT.Loc != TRUE),
+          conditional(input$OTP.Dir == F, OTP.Dir != TRUE),
+          conditional(input$Other.Src == F, Other.Src != TRUE),
+          conditional(input$bup == F, Buprenorphine != "Yes"),
+          conditional(input$meth == F, Methadone != "Yes"),
+          conditional(input$nal == F, Naltrexone != "Yes"),
+          conditional(input$primary == F, Primary.Care != "Yes"),
+          conditional(input$tele == F, Telehealth != "Yes"),
+          conditional(input$pay == F, Payment.Assistance != "Yes"),
+          conditional(input$medicaid == F, Medicaid != "Yes"),
         )
       
     } else {
